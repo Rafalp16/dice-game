@@ -7,7 +7,24 @@
         <title>Pig Game</title>
     </head>
     <body>
-        
+        <div class="wrapper">
+            <div id="start">Start new game</div>
+            <div id="reroll">Reroll</div>
+            <div id="stop">Stop</div>
+            
+            <div class="player-0">
+                <div class="player__name active">Player 1</div>
+                <div class="player__score" id="score-0">Score</div>
+                <div class="player__roundScore" id="roundScore-0">Round Score</div>
+                <div class="player__dice" id="diceScore-0"></div>
+            </div>
+            <div class="player-1">
+                <div class="player__name">Player 2</div>
+                <div class="player__score" id="score-1">Score</div>
+                <div class="player__roundScore" id="roundScore-1">Round Score</div>
+                <div class="player__dice" id="diceScore-1"></div>
+            </div>
+        </div>
         <script src="app.js"></script>
     </body>
 </html>

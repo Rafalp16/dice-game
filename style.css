@@ -7,7 +7,20 @@ html {
 }
 
 body {
-    background: url(img/background.jpg) center center / cover no-repeat;
-    background-attachment: fixed;
     line-height: 1.5;
+}
+
+.wrapper {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.player-0, .player-1 {
+    border: 5px solid #000;
+    margin: 1em 0;
+}
+
+.active {
+    font-weight: 800;
 }
