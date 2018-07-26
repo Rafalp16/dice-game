@@ -1,8 +1,9 @@
-let roundScore, score, activePlayer;
+let roundScore, score_0, score_1, activePlayer;
 
 document.getElementById('start').addEventListener('click', function() {
     roundScore = 0;
-    score = 0;
+    score_0 = 0;
+    score_1 = 0;
     activePlayer = 0;
     document.getElementById('score-0').textContent = 0;
     document.getElementById('score-1').textContent = 0;
@@ -20,15 +21,19 @@ document.getElementById('reroll').addEventListener('click', function() {
         roundScore = 0;
         document.getElementById('roundScore-' + activePlayer).textContent = roundScore;
         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-        score = 0;
+        document.getElementById('player-0').classList.toggle('active');
+        document.getElementById('player-1').classList.toggle('active');
     }
 })
 
 document.getElementById('stop').addEventListener('click', function() {
-    score += roundScore;
+    activePlayer === 0 ? score_0 += roundScore : score_1 += roundScore;
     roundScore = 0;        
     document.getElementById('roundScore-' + activePlayer).textContent = roundScore;
-    document.getElementById('score-' + activePlayer).textContent = score;
+    document.getElementById('score-' + activePlayer).textContent = 
+    activePlayer === 0 ? score_0 : score_1;
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    document.getElementById('player-0').classList.toggle('active');
+    document.getElementById('player-1').classList.toggle('active');
 })
 
