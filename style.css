@@ -29,12 +29,6 @@ body {
         background-size: 20px 20px;
 }
 
-@media (max-width: 35em) {
-    .wrapper {
-        font-size: 1.5em;
-    }
-}
-
 .players-wrapper {
     display: flex;
     justify-content: center;
@@ -44,6 +38,13 @@ body {
     width: 5em;
     height: 5em;
     visibility: hidden;
+}
+
+@media (max-width: 35em) {
+    .trophy {
+        width: 3em;
+        height: 3em;
+    }
 }
 
 .rules {
@@ -72,7 +73,7 @@ body {
 
 @media (max-width: 35em) {
     .player__name {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 }
 
@@ -82,7 +83,7 @@ body {
 
 @media (max-width: 35em) {
     .player__score {
-        font-size: 1.5em;
+        font-size: 1em;
     }
 }
 
