@@ -4,26 +4,30 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="normalize.css">
         <link rel="stylesheet" href="style.css">    
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> 
         <title>Pig Game</title>
     </head>
     <body>
         <div class="wrapper">
-            <div id="start">Start new game</div>
-            <div id="reroll">Reroll</div>
-            <div id="stop">Stop</div>
-            
-            <div class="player-0">
-                <div class="player__name active" id="player-0">Player 1</div>
-                <div class="player__score" id="score-0">Score</div>
-                <div class="player__roundScore" id="roundScore-0">Round Score</div>
-                <div class="player__dice" id="diceScore-0"></div>
+            <div id="rules-button" class="button">RULES</div>
+            <div class="rules hidden" id="rules">Win by getting to 100 points first! If you roll a 1, you lose your round score, if you press stop your round score gets added to global score. Good luck!</div>
+            <div id="start" class="button button--green">Start new game</div>
+            <div id="reroll" class="button">Reroll</div>
+            <div id="stop" class="button button--red">Stop</div>
+            <div class="players-wrapper">
+                <div class="player" id="player">
+                    <div class="player__name" id="player-0">Player 1</div>
+                    <div class="player__score">Score: <span id="score-0">0</span></div>
+                    <img src="img/trophy.png" class="trophy" id="trophy-0">
+                </div>
+                <div class="player" id="player">
+                    <div class="player__name" id="player-1">Player 2</div>
+                    <div class="player__score">Score: <span id="score-1">0</span></div>
+                    <img src="img/trophy.png" class="trophy" id="trophy-1">
+                </div>
             </div>
-            <div class="player-1">
-                <div class="player__name" id="player-1">Player 2</div>
-                <div class="player__score" id="score-1">Score</div>
-                <div class="player__roundScore" id="roundScore-1">Round Score</div>
-                <div class="player__dice" id="diceScore-1"></div>
-            </div>
+            <div class="roundScore">Round score: <span id="roundScore">0</span></div>
+            <div class="dice" id="diceScore">Roll a dice!</div>
         </div>
         <script src="app.js"></script>
     </body>

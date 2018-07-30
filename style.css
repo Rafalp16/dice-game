@@ -7,20 +7,104 @@ html {
 }
 
 body {
+    font-family: 'Indie Flower', cursive;
+    color: #fff;
     line-height: 1.5;
 }
 
 .wrapper {
-    width: 50%;
+    font-size: 1.5em;
+    padding-top: 1em;
+    height: 100vh;
     text-align: center;
+    margin: 0 auto;
+    background:
+        linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+        linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+        linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+        linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+        linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+        linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+        background-color: #131313;
+        background-size: 20px 20px;
+}
+
+@media (max-width: 35em) {
+    .wrapper {
+        font-size: 1.5em;
+    }
+}
+
+.players-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.trophy {
+    width: 5em;
+    height: 5em;
+    visibility: hidden;
+}
+
+.rules {
+    display: block;
+    width: 50%;
     margin: 0 auto;
 }
 
-.player-0, .player-1 {
-    border: 5px solid #000;
-    margin: 1em 0;
+@media (max-width: 35em) {
+    .rules {
+        width: 90%;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.player {
+    width: 50%;
+}
+
+.player__name {
+    font-size: 3em;
+}
+
+@media (max-width: 35em) {
+    .player__name {
+        font-size: 2em;
+    }
+}
+
+.player__score {
+    font-size: 2em;
+}
+
+@media (max-width: 35em) {
+    .player__score {
+        font-size: 1.5em;
+    }
+}
+
+.button {
+    display: table;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.button:hover, .button:active, .button:focus {
+    text-shadow: 2px 2px 20px;
+}
+
+.button--green:hover, .button--green:active, .button--green:focus {
+    color: #0f0;
+}
+
+.button--red:hover, .button--red:active, .button--red:focus {
+    color: #f00;
 }
 
 .active {
     font-weight: 800;
+    text-shadow: 2px 2px 100px;
 }
