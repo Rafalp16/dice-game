@@ -110,6 +110,18 @@ body {
     color: #f00;
 }
 
+.log-wrapper {
+    display: flex;
+    margin: 1em auto;;
+    width: 90%;    
+}
+
+.log {
+    white-space: pre;
+    width: 50%;
+    margin: 0 auto;
+}
+
 .active {
     font-weight: 800;
     text-shadow: 2px 2px 100px;

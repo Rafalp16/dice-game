@@ -19,12 +19,15 @@ function gameStart() {
     playersDOM[1].classList.remove('active');
     trophyDOM[0].classList.add('hidden');
     trophyDOM[1].classList.add('hidden');
+    document.getElementById('log-0').textContent = 'Player 1\r\n';
+    document.getElementById('log-1').textContent = 'Player 2\r\n';
     game = 1;
 }
 
 function roll() {
     roundScore > 0 ? dice = Math.floor(Math.random() * 6) + 1 : dice = Math.floor(Math.random() * 5) + 2;
     diceScoreDOM.textContent = 'You rolled a ' + dice;
+    console.log(dice);
 }
 
 function updateRoundScore() {
@@ -44,6 +47,7 @@ function changePlayer() {
     activePlayer = activePlayer === 0 ? 1 : 0;
     playersDOM[0].classList.toggle('active');
     playersDOM[1].classList.toggle('active');
+    console.log("player changed");
 }
 
 function currentWinner() {
@@ -66,6 +70,23 @@ function isGameWon() {
     return false;
 }
 
+function enemy() {
+    roll();
+    document.getElementById('log-' + activePlayer).textContent += (dice + ' ');
+    if (dice > 1) {
+        roundScore += dice;
+        if(roundScore < 13 && scores[activePlayer]+roundScore < 100)
+        enemy();
+        else document.getElementById('stop').click();
+    } else {
+        roundScore = 0;
+        document.getElementById('log-' + activePlayer).textContent += ('\r\n');
+        changePlayer();
+        resetDiceScore();
+    }
+    updateRoundScore();
+}
+
 document.getElementById('rules-button').addEventListener('click', function() {
     rulesDOM.classList.toggle('display');
 })
@@ -75,11 +96,14 @@ document.getElementById('start').addEventListener('click', gameStart);
 document.getElementById('reroll').addEventListener('click', function() {
     if(game) {
         roll();
+        document.getElementById('log-' + activePlayer).textContent += (dice + ' ');
         if (dice > 1) {
             roundScore += dice;
         } else {
             roundScore = 0;
+            document.getElementById('log-' + activePlayer).textContent += ('\r\n');
             changePlayer();
+            if(activePlayer === 1) enemy();
             resetDiceScore();
         }
         updateRoundScore();
@@ -92,8 +116,10 @@ document.getElementById('stop').addEventListener('click', function() {
     isGameWon();
     if(game) {
         resetDiceScore();
+        document.getElementById('log-' + activePlayer).textContent += ('\r\n');
         changePlayer();
         roundScore = 0;
         updateRoundScore();
+        if(activePlayer === 1) enemy();
     }
 })
