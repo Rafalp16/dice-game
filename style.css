@@ -37,7 +37,6 @@ body {
 .trophy {
     width: 5em;
     height: 5em;
-    visibility: hidden;
 }
 
 @media (max-width: 35em) {
@@ -59,8 +58,12 @@ body {
     }
 }
 
-.hidden {
+.display {
     display: none;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .player {
@@ -88,9 +91,11 @@ body {
 }
 
 .button {
-    display: table;
-    margin: 0 auto;
+    margin: 0.5em auto;
     cursor: pointer;
+    background: none;
+    color: #fff;
+    border: none;
 }
 
 .button:hover, .button:active, .button:focus {

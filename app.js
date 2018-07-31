@@ -1,4 +1,4 @@
-let roundScore, scores = [], activePlayer, game = 0;
+let roundScore, scores = [], activePlayer, game = 0, dice;
 const scoresDOM = [document.getElementById('score-0'), document.getElementById('score-1')];
 const roundScoreDOM = document.getElementById('roundScore');
 const diceScoreDOM = document.getElementById('diceScore');
@@ -6,11 +6,7 @@ const playersDOM = [document.getElementById('player-0'), document.getElementById
 const trophyDOM = [document.getElementById('trophy-0'), document.getElementById('trophy-1')];
 const rulesDOM = document.getElementById('rules');
 
-document.getElementById('rules-button').addEventListener('click', function() {
-    rulesDOM.classList.toggle('hidden');
-})
-
-document.getElementById('start').addEventListener('click', function() {
+function gameStart() {
     roundScore = 0;
     scores[0] = 0;
     scores[1] = 0;
@@ -21,51 +17,83 @@ document.getElementById('start').addEventListener('click', function() {
     diceScoreDOM.textContent = 'Roll a dice!';
     playersDOM[0].classList.add('active');
     playersDOM[1].classList.remove('active');
-    trophyDOM[0].style = "visibility: hidden;" 
-    trophyDOM[1].style = "visibility: hidden;" 
+    trophyDOM[0].classList.add('hidden');
+    trophyDOM[1].classList.add('hidden');
     game = 1;
+}
+
+function roll() {
+    roundScore > 0 ? dice = Math.floor(Math.random() * 6) + 1 : dice = Math.floor(Math.random() * 5) + 2;
+    diceScoreDOM.textContent = 'You rolled a ' + dice;
+}
+
+function updateRoundScore() {
+    roundScoreDOM.textContent = roundScore;
+}
+
+function updateScore() {
+    scores[activePlayer] += roundScore;
+    scoresDOM[activePlayer].textContent = scores[activePlayer];
+}
+
+function resetDiceScore() {
+    diceScoreDOM.textContent = 'Roll a dice!';
+}
+
+function changePlayer() {
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    playersDOM[0].classList.toggle('active');
+    playersDOM[1].classList.toggle('active');
+}
+
+function currentWinner() {
+    if(scores[0] > scores[1]) {
+        trophyDOM[0].classList.remove('hidden');
+        trophyDOM[1].classList.add('hidden');
+    } else if(scores[1] > scores[0]) {
+        trophyDOM[0].classList.add('hidden');
+        trophyDOM[1].classList.remove('hidden');
+    }
+}
+
+function isGameWon() {
+    if(scores[activePlayer] >= 100) {
+        game = 0;
+        roundScore = 0;
+        alert("End of game!");
+        return true;
+    }
+    return false;
+}
+
+document.getElementById('rules-button').addEventListener('click', function() {
+    rulesDOM.classList.toggle('display');
 })
+
+document.getElementById('start').addEventListener('click', gameStart);
 
 document.getElementById('reroll').addEventListener('click', function() {
     if(game) {
-        let dice;
-        roundScore > 0 ? dice = Math.floor(Math.random() * 6) + 1 : dice = Math.floor(Math.random() * 5) + 2;
-        diceScoreDOM.textContent = 'You rolled a ' + dice;
+        roll();
         if (dice > 1) {
             roundScore += dice;
-            roundScoreDOM.textContent = roundScore;
-        }else {
+        } else {
             roundScore = 0;
-            roundScoreDOM.textContent = roundScore;
-            activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-            playersDOM[0].classList.toggle('active');
-            playersDOM[1].classList.toggle('active');
-            diceScoreDOM.textContent = 'Roll a dice!';
+            changePlayer();
+            resetDiceScore();
         }
+        updateRoundScore();
     }
 })
 
 document.getElementById('stop').addEventListener('click', function() {
+    updateScore();
+    currentWinner();
+    isGameWon();
     if(game) {
-        scores[activePlayer] += roundScore;
-        roundScore = 0;        
-        roundScoreDOM.textContent = roundScore;
-        scoresDOM[activePlayer].textContent = scores[activePlayer];
-        if(scores[0] > scores[1]) {
-           trophyDOM[0].style = "visibility: visible;";
-           trophyDOM[1].style = "visibility: hidden;";
-        }else if(scores[1] > scores[0]) {
-           trophyDOM[1].style = "visibility: visible;";
-           trophyDOM[0].style = "visibility: hidden;";
-        }
-        diceScoreDOM.textContent = 'Roll a dice!';
-        if(scores[activePlayer] >= 100) {
-            game = 0;
-            alert("End of game!");
-            return;
-        }
-        playersDOM[0].classList.toggle('active');
-        playersDOM[1].classList.toggle('active');
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        resetDiceScore();
+        changePlayer();
+        roundScore = 0;
+        updateRoundScore();
     }
 })

@@ -6,30 +6,30 @@
         <meta name="keywords" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Pig Game</title>
         <link rel="stylesheet" href="normalize.css">
         <link rel="stylesheet" href="style.css">    
-        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> 
-        <title>Pig Game</title>
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">
-            <div id="rules-button" class="button">RULES</div>
-            <div class="rules hidden" id="rules">Win by getting to 100 points first! If you roll a 1, you lose your round score, if you press stop your round score gets added to global score. Good luck!</div>
-            <div id="start" class="button button--green">Start new game</div>
-            <div id="reroll" class="button">Reroll</div>
-            <div id="stop" class="button button--red">Stop</div>
+            <button id="rules-button" class="button">RULES</button>
+            <button id="start" class="button button--green">Start new game</button>
+            <div class="rules display" id="rules">Win by getting to 100 points first! If you roll a 1, you lose your round score, if you press stop your round score gets added to global score. Good luck!</div>
             <div class="players-wrapper">
-                <div class="player" id="player">
+                <div class="player">
                     <div class="player__name" id="player-0">Player 1</div>
                     <div class="player__score">Score: <span id="score-0">0</span></div>
-                    <img src="img/trophy.png" class="trophy" id="trophy-0">
+                    <img src="img/trophy.png" class="trophy hidden" id="trophy-0">
                 </div>
-                <div class="player" id="player">
+                <div class="player">
                     <div class="player__name" id="player-1">Player 2</div>
                     <div class="player__score">Score: <span id="score-1">0</span></div>
-                    <img src="img/trophy.png" class="trophy" id="trophy-1">
+                    <img src="img/trophy.png" class="trophy hidden" id="trophy-1">
                 </div>
             </div>
+            <button id="reroll" class="button button--green">Reroll</button>
+            <button id="stop" class="button button--red">Stop</button>
             <div class="roundScore">Round score: <span id="roundScore">0</span></div>
             <div class="dice" id="diceScore">Roll a dice!</div>
         </div>
