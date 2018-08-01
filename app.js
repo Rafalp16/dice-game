@@ -5,6 +5,7 @@ const diceScoreDOM = document.getElementById('diceScore');
 const playersDOM = [document.getElementById('player-0'), document.getElementById('player-1')];
 const trophyDOM = [document.getElementById('trophy-0'), document.getElementById('trophy-1')];
 const rulesDOM = document.getElementById('rules');
+let newSpan = document.createElement('span');
 
 function gameStart() {
     roundScore = 0;
@@ -19,8 +20,8 @@ function gameStart() {
     playersDOM[1].classList.remove('active');
     trophyDOM[0].classList.add('hidden');
     trophyDOM[1].classList.add('hidden');
-    document.getElementById('log-0').textContent = 'Player 1\r\n';
-    document.getElementById('log-1').textContent = 'Player 2\r\n';
+    document.getElementById('log-0').innerHTML = 'Player 1<br>';
+    document.getElementById('log-1').innerHTML = 'Player 2<br>';
     game = 1;
 }
 
@@ -28,6 +29,10 @@ function roll() {
     roundScore > 0 ? dice = Math.floor(Math.random() * 6) + 1 : dice = Math.floor(Math.random() * 5) + 2;
     diceScoreDOM.textContent = 'You rolled a ' + dice;
     console.log(dice);
+}
+
+function resetRoundScore() {
+    roundScore = 0;
 }
 
 function updateRoundScore() {
@@ -60,66 +65,74 @@ function currentWinner() {
     }
 }
 
+function toggleRules() {
+    rulesDOM.classList.toggle('display');
+}
+
 function isGameWon() {
     if(scores[activePlayer] >= 100) {
         game = 0;
-        roundScore = 0;
+        resetRoundScore();
         alert("End of game!");
         return true;
     }
     return false;
 }
 
-function enemy() {
-    roll();
-    document.getElementById('log-' + activePlayer).textContent += (dice + ' ');
-    if (dice > 1) {
-        roundScore += dice;
-        if(roundScore < 13 && scores[activePlayer]+roundScore < 100)
-        enemy();
-        else document.getElementById('stop').click();
-    } else {
-        roundScore = 0;
-        document.getElementById('log-' + activePlayer).textContent += ('\r\n');
-        changePlayer();
-        resetDiceScore();
-    }
-    updateRoundScore();
+function logRound(color) {
+    newSpan.innerHTML += '<br>';
+    newSpan.classList.add(color);
+    document.getElementById('log-' + activePlayer).appendChild(newSpan);
+    newSpan = document.createElement('span');        
 }
 
-document.getElementById('rules-button').addEventListener('click', function() {
-    rulesDOM.classList.toggle('display');
-})
+function logRoll() {
+    newSpan.innerHTML += dice + ' ';
+}
 
-document.getElementById('start').addEventListener('click', gameStart);
+function decideNextStep() {
+    if(roundScore < 13 && scores[activePlayer]+roundScore < 100)
+    rollDice();
+    else document.getElementById('stop').click();
+}
 
-document.getElementById('reroll').addEventListener('click', function() {
+function rollDice() {
     if(game) {
         roll();
-        document.getElementById('log-' + activePlayer).textContent += (dice + ' ');
+        logRoll();
         if (dice > 1) {
             roundScore += dice;
         } else {
-            roundScore = 0;
-            document.getElementById('log-' + activePlayer).textContent += ('\r\n');
+            resetRoundScore();
+            logRound('red');
             changePlayer();
-            if(activePlayer === 1) enemy();
             resetDiceScore();
         }
+        if(activePlayer === 1) decideNextStep();
         updateRoundScore();
     }
-})
+}
 
-document.getElementById('stop').addEventListener('click', function() {
-    updateScore();
-    currentWinner();
-    isGameWon();
-    if(game) {
-        resetDiceScore();
-        document.getElementById('log-' + activePlayer).textContent += ('\r\n');
-        changePlayer();
-        roundScore = 0;
-        updateRoundScore();
-        if(activePlayer === 1) enemy();
+function stopRound() {
+    if(roundScore !== 0) {
+        updateScore();
+        currentWinner();
+        logRound('green');
+        isGameWon();
+        if(game) {
+            resetDiceScore();
+            changePlayer();
+            resetRoundScore();
+            updateRoundScore();
+            if(activePlayer === 1) decideNextStep();
+        }
     }
-})
+}
+
+document.getElementById('rules-button').addEventListener('click', toggleRules);
+
+document.getElementById('start').addEventListener('click', gameStart);
+
+document.getElementById('reroll').addEventListener('click', rollDice);
+
+document.getElementById('stop').addEventListener('click', stopRound);
