@@ -20,15 +20,14 @@ function gameStart() {
     playersDOM[1].classList.remove('active');
     trophyDOM[0].classList.add('hidden');
     trophyDOM[1].classList.add('hidden');
-    document.getElementById('log-0').innerHTML = 'Player 1<br>';
-    document.getElementById('log-1').innerHTML = 'Player 2<br>';
+    document.getElementById('log-0').innerHTML = 'You<br>';
+    document.getElementById('log-1').innerHTML = 'Enemy<br>';
     game = 1;
 }
 
 function roll() {
     roundScore > 0 ? dice = Math.floor(Math.random() * 6) + 1 : dice = Math.floor(Math.random() * 5) + 2;
     diceScoreDOM.textContent = 'You rolled a ' + dice;
-    console.log(dice);
 }
 
 function resetRoundScore() {
@@ -52,7 +51,6 @@ function changePlayer() {
     activePlayer = activePlayer === 0 ? 1 : 0;
     playersDOM[0].classList.toggle('active');
     playersDOM[1].classList.toggle('active');
-    console.log("player changed");
 }
 
 function currentWinner() {
@@ -88,12 +86,13 @@ function logRound(color) {
 
 function logRoll() {
     newSpan.innerHTML += dice + ' ';
+    document.getElementById('log-' + activePlayer).appendChild(newSpan);
 }
 
 function decideNextStep() {
-    if(roundScore < 13 && scores[activePlayer]+roundScore < 100)
-    rollDice();
-    else document.getElementById('stop').click();
+    if(roundScore < 16 && scores[activePlayer]+roundScore < 100)
+    setTimeout(rollDice, 1500);
+    else setTimeout(stopRound, 2000);
 }
 
 function rollDice() {
@@ -133,6 +132,10 @@ document.getElementById('rules-button').addEventListener('click', toggleRules);
 
 document.getElementById('start').addEventListener('click', gameStart);
 
-document.getElementById('reroll').addEventListener('click', rollDice);
+document.getElementById('reroll').addEventListener('click', function() {
+    if(activePlayer === 0) rollDice();
+});
 
-document.getElementById('stop').addEventListener('click', stopRound);
+document.getElementById('stop').addEventListener('click', function() {
+    if(activePlayer ===0) stopRound();
+})

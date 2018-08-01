@@ -126,6 +126,7 @@ body {
 
 .active {
     font-weight: 800;
+    color: #0f0;
     text-shadow: 2px 2px 100px;
 }
 
